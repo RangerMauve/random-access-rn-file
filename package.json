@@ -1,0 +1,32 @@
+{
+  "name": "random-access-rn-file",
+  "version": "1.0.0",
+  "description": "A random-access-* compatible implementation for React-Native that uses it's filesystem",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RangerMauve/random-access-rn-file.git"
+  },
+  "keywords": [
+    "random",
+    "access",
+    "storage",
+    "react",
+    "native",
+    "rn",
+    "file"
+  ],
+  "author": "rangermauve",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RangerMauve/random-access-rn-file/issues"
+  },
+  "homepage": "https://github.com/RangerMauve/random-access-rn-file#readme",
+  "dependencies": {
+    "random-access-storage": "^1.3.0",
+    "react-native-fs": "^2.13.3"
+  }
+}
