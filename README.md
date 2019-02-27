@@ -1,6 +1,18 @@
 # random-access-rn-file
 A random-access-* compatible implementation for React-Native that uses it's filesystem
 
+```
+npm install --save random-access-rn-file
+
+# If you're building an application
+# Link the FS APIs
+react-native link react-native-fs
+
+# Make node modules work (Make sure to import shim.js)
+npm install --save-dev rn-nodeify
+rn-nodeify --install --hack
+```
+
 Uses [random-access-storage](https://github.com/random-access-storage/random-access-storage) along with [react-native-fs](https://github.com/itinance/react-native-fs/) to provide the ability to read and write files.
 
 After installing, make sure to run `react-native link react-native-fs` to set up the native dependencies
