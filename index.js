@@ -1,23 +1,63 @@
-var randomAccess = require('random-access-storage')
-var RNFS = require('react-native-fs')
+import pathAPI from 'path'
+import randomAccess from 'random-access-storage'
+import RNFS from 'react-native-fs'
 
-function fileReader(name) {
+async function open (name) {
+  await ensureFileFolder(name)
+
+  const exists = await RNFS.exists(name)
+  if (!exists) {
+    await RNFS.writeFile(name, '', 'utf8')
+  }
+}
+
+async function ensureFileFolder (name) {
+  const dir = pathAPI.dirname(name)
+
+  const exists = await RNFS.exists(dir)
+
+  if (!exists) await ensureFileFolder(dir)
+
+  await RNFS.mkdir(dir)
+}
+
+export default function fileReader (name) {
   return randomAccess({
-    read: function (req) {
-      RNFS.read(name, req.length, req.offset, 'base64').then(function(data) {
-        const buffer = Buffer.from(data, 'base64')
-        req.callback(null, Buffer)
-      }, function(err) {
-        res.callback(err)
-      })
+    open (req) {
+      open(name).then(
+        () => {
+          req.callback(null)
+        },
+        err => {
+          req.callback(err)
+        }
+      )
     },
-    write: function (req) {
+    read (req) {
+      RNFS.read(name, req.size, req.offset, 'base64').then(
+        data => {
+          const buffer = Buffer.from(data, 'base64')
+          if (buffer.length !== req.size) {
+            req.callback(new Error('Range not satisfiable'))
+          } else {
+            req.callback(null, buffer)
+          }
+        },
+        err => {
+          req.callback(err)
+        }
+      )
+    },
+    write (req) {
       const data = req.data.toString('base64')
-      RNFS.write(name, data, req.offset, 'base64').then(function() {
-        req.callback(null)
-      }, function(err) {
-        res.callback(err)
-      })
+      RNFS.write(name, data, req.offset, 'base64').then(
+        () => {
+          req.callback(null)
+        },
+        err => {
+          req.callback(err)
+        }
+      )
     }
   })
 }

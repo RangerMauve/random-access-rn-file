@@ -1,6 +1,6 @@
 {
   "name": "random-access-rn-file",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A random-access-* compatible implementation for React-Native that uses it's filesystem",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/RangerMauve/random-access-rn-file#readme",
   "dependencies": {
+    "path": "^0.12.7",
     "random-access-storage": "^1.3.0",
     "react-native-fs": "^2.13.3"
   }
